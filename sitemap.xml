@@ -2,7 +2,42 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://yokii-ry.github.io/2021/03/02/hello-world/</loc>
+    <loc>https://yokii-ry.github.io/2021/03/02/module/</loc>
+    
+    <lastmod>2021-03-02</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://yokii-ry.github.io/2021/03/02/zsh/</loc>
+    
+    <lastmod>2021-03-02</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://yokii-ry.github.io/2021/03/02/uniappSafe/</loc>
+    
+    <lastmod>2021-03-02</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://yokii-ry.github.io/2021/03/02/exportgroup/</loc>
+    
+    <lastmod>2021-03-02</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://yokii-ry.github.io/2021/03/02/promise/</loc>
+    
+    <lastmod>2021-03-02</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://yokii-ry.github.io/2021/03/02/for/</loc>
     
     <lastmod>2021-03-02</lastmod>
     
@@ -10,6 +45,41 @@
   
   <url>
     <loc>https://yokii-ry.github.io/categories/index.html</loc>
+    
+    <lastmod>2021-03-02</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://yokii-ry.github.io/2021/03/02/bigDecima/</loc>
+    
+    <lastmod>2021-03-02</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://yokii-ry.github.io/2021/03/02/banner/</loc>
+    
+    <lastmod>2021-03-02</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://yokii-ry.github.io/2021/03/02/stringSplit/</loc>
+    
+    <lastmod>2021-03-02</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://yokii-ry.github.io/2021/03/02/vue-route/</loc>
+    
+    <lastmod>2021-03-02</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://yokii-ry.github.io/2021/03/02/mirroring/</loc>
     
     <lastmod>2021-03-02</lastmod>
     

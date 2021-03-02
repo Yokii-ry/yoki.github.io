@@ -6,7 +6,7 @@
   <link href="https://yokii-ry.github.io/atom.xml" rel="self"/>
   
   <link href="https://yokii-ry.github.io/"/>
-  <updated>2021-03-02T10:43:52.678Z</updated>
+  <updated>2021-03-02T12:17:15.892Z</updated>
   <id>https://yokii-ry.github.io/</id>
   
   <author>
@@ -17,13 +17,216 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>前端如何配置不同镜像源：yarn cnpm</title>
-    <link href="https://yokii-ry.github.io/2021/03/02/hello-world/"/>
-    <id>https://yokii-ry.github.io/2021/03/02/hello-world/</id>
-    <published>2021-03-02T08:50:26.760Z</published>
-    <updated>2021-03-02T10:43:52.678Z</updated>
+    <title>【模块化】export与export default在一个文件里共存，引入时需注意的地方</title>
+    <link href="https://yokii-ry.github.io/2021/03/02/module/"/>
+    <id>https://yokii-ry.github.io/2021/03/02/module/</id>
+    <published>2021-03-02T12:13:38.556Z</published>
+    <updated>2021-03-02T12:17:15.892Z</updated>
     
-    <content type="html"><![CDATA[<p>  在装的过程中，使用npm有时候因为网络问题容易丢包，因此可配置一些镜像源进行优化，vue3好像也不能直接使用npm，只能使用yarn，整理了一些镜像源，推荐给大家，有错误希望能指出来，感恩。</p><h2 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h2><h3 id="1-直接修改镜像源"><a href="#1-直接修改镜像源" class="headerlink" title="1.直接修改镜像源"></a>1.直接修改镜像源</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">　　$ npm config <span class="built_in">set</span> registry https://registry.npm.taobao.org</span><br><span class="line"></span><br><span class="line">　　$ npm config get registry</span><br></pre></td></tr></table></figure><h3 id="2-安装cnpm-不推荐使用"><a href="#2-安装cnpm-不推荐使用" class="headerlink" title="2.安装cnpm (不推荐使用)"></a>2.安装cnpm (不推荐使用)</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install -g cnpm --registry=https://registry.npm.taobao.org</span><br></pre></td></tr></table></figure><h3 id="3-nrm-可选-如果已经做了1-就不需要设置了"><a href="#3-nrm-可选-如果已经做了1-就不需要设置了" class="headerlink" title="3.nrm (可选 如果已经做了1 就不需要设置了)"></a>3.nrm (可选 如果已经做了1 就不需要设置了)</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ npm i nrm -g</span><br><span class="line"></span><br><span class="line">  $ nrm -V 验证版本</span><br><span class="line"></span><br><span class="line">  $ nrm ls | list 查看可切换镜像源</span><br><span class="line"></span><br><span class="line">  $ nrm use cnpm | npm | taobao taobao 是最快的 建议使用</span><br></pre></td></tr></table></figure><h3 id="4-yarn"><a href="#4-yarn" class="headerlink" title="4.yarn"></a>4.yarn</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">$  npm i yarn -g</span><br><span class="line"></span><br><span class="line">       $ yarn -v</span><br><span class="line"></span><br><span class="line">       $ yarn config <span class="built_in">set</span> registry https://registry.npm.taobao.org</span><br><span class="line"></span><br><span class="line">       $ yarn config get registry</span><br><span class="line"></span><br><span class="line">       $ npm 常用命令</span><br><span class="line"></span><br><span class="line">       $ npm install 包名 -g | --save-dev(-D) --save(-S)</span><br><span class="line"></span><br><span class="line">       $ npm uninstall 包名 -g | --save-dev(-D) --save(-S)</span><br><span class="line"></span><br><span class="line">       $ yarn 常用命令</span><br><span class="line"></span><br><span class="line">       $ yarn add 包名 -g | --save-dev(-D) --save(-S)</span><br><span class="line"></span><br><span class="line">       $ yarn remove 包名 -g | --save-dev(-D) --save(-S)</span><br></pre></td></tr></table></figure>]]></content>
+    <content type="html"><![CDATA[<p><strong>export 与 export default</strong><br>   <em>export在同一个文件中可存在多个：</em></p><ul><li>export default在同一个文件中只可存在一个（一个模块只能有一个默认输出）：*<br><img src="/img/muduleImg/img1.png"></li></ul><p><strong>引入的区别</strong><br>   <em>引入的时候 export加{} 而export default可定义为随便一个名称</em><br>      <img src="/img/muduleImg/img2.png"></p><pre><code>还可以import a,&#123;arr,obj&#125; from &#39;./test.js&#39;</code></pre>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;&lt;strong&gt;export 与 export default&lt;/strong&gt;&lt;br&gt;   &lt;em&gt;export在同一个文件中可存在多个：&lt;/em&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;export default在同一个文件中只可存在一个（一个模块只能有一个默认输出）：*&lt;br&gt;</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>【mac环境】zsh:command not found：</title>
+    <link href="https://yokii-ry.github.io/2021/03/02/zsh/"/>
+    <id>https://yokii-ry.github.io/2021/03/02/zsh/</id>
+    <published>2021-03-02T12:10:28.604Z</published>
+    <updated>2021-03-02T12:12:55.239Z</updated>
+    
+    <content type="html"><![CDATA[<p>近段时间从window换到mac系统，随之而来的问题接踵而来：全局安装了yarn、webpack等全局包，从开始没权限到安装成功，以为成功了，但是一执行yarn等相关命令却报 zsh: command not found: xx，到网上看了n多教程，终于尝试n次成功了，如果你试了网上n多教程没用，看看这篇比较详细又简单的教程，说不定能帮到你：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line">MAC bookPro出现zsh: <span class="built_in">command</span> not found: xxx解决方法：</span><br><span class="line"></span><br><span class="line">把 bash shell 中.bash_profile 全部环境变量加入zsh shell里就好</span><br><span class="line"></span><br><span class="line">step1:</span><br><span class="line"></span><br><span class="line">Term执行</span><br><span class="line"></span><br><span class="line">open .zshrc</span><br><span class="line"></span><br><span class="line">step2:</span><br><span class="line"></span><br><span class="line">在弹出的编辑器最下面</span><br><span class="line"></span><br><span class="line">加入</span><br><span class="line"></span><br><span class="line"><span class="built_in">source</span> ~/.bash_profile</span><br><span class="line"></span><br><span class="line">或者</span><br><span class="line"></span><br><span class="line"><span class="built_in">source</span> .bash_profile</span><br><span class="line"></span><br><span class="line">看哪个奏效，这一步就在zshrc执行时将 .bash_profile 全部环境变量加入zsh shell了</span><br><span class="line"></span><br><span class="line">保存</span><br><span class="line"></span><br><span class="line">step3:</span><br><span class="line"></span><br><span class="line">terminal执行</span><br><span class="line"></span><br><span class="line"><span class="built_in">source</span> .zshrc              更新配置</span><br><span class="line"></span><br><span class="line">如果到此你已经解决了问题，那恭喜你了，可题主我就没这么幸运，我在terminal执行<span class="built_in">source</span> .zshrc时报找不到bash_profile，坑爹的有些mac就是没有bash_profile这个文件，需要手动新建，如果你也是这样请继续跟我操作</span><br><span class="line"></span><br><span class="line">step:1</span><br><span class="line"></span><br><span class="line">terminal执行</span><br><span class="line"></span><br><span class="line">touch .bash_profile         创建.bash_profile </span><br><span class="line"></span><br><span class="line">这时候就有了bash_profile这个文件，当然是没有内容的空文件，这里又需要你写入path，我接下来是这么操作的</span><br><span class="line"></span><br><span class="line">step:2</span><br><span class="line"></span><br><span class="line">创建global安装任务的目录</span><br><span class="line"></span><br><span class="line">mkdir ~/.npm-global</span><br><span class="line"></span><br><span class="line">step:3</span><br><span class="line"></span><br><span class="line">配置npm全局下载时，下载到新的地址目录</span><br><span class="line"></span><br><span class="line">npm config <span class="built_in">set</span> prefix <span class="string">&#x27;~/.npm-global&#x27;</span></span><br><span class="line"></span><br><span class="line">至此你再npm i xxx -g就会存储到npm-global的地址下了</span><br><span class="line"></span><br><span class="line">step:4</span><br><span class="line"></span><br><span class="line">open .bash_profile</span><br><span class="line"></span><br><span class="line">在弹出的编辑器中增加配置</span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> PATH=~/.npm-global/bin:<span class="variable">$&#123;PATH&#125;</span></span><br><span class="line"></span><br><span class="line">保存</span><br><span class="line"></span><br><span class="line">step:5</span><br><span class="line"></span><br><span class="line">terminal执行</span><br><span class="line"></span><br><span class="line"><span class="built_in">source</span> .bash_profile    更新配置</span><br><span class="line"></span><br><span class="line">至此解决问题</span><br><span class="line"></span><br><span class="line">出处:https://www.jianshu.com/p/64c175476acc。</span><br></pre></td></tr></table></figure>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;近段时间从window换到mac系统，随之而来的问题接踵而来：全局安装了yarn、webpack等全局包，从开始没权限到安装成功，以为成功了，但是一执行yarn等相关命令却报 zsh: command not found: xx，到网上看了n多教程，终于尝试n次成功了，如果</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>【uniapp】兼容刘海屏底部安全区</title>
+    <link href="https://yokii-ry.github.io/2021/03/02/uniappSafe/"/>
+    <id>https://yokii-ry.github.io/2021/03/02/uniappSafe/</id>
+    <published>2021-03-02T12:07:17.602Z</published>
+    <updated>2021-03-02T12:09:14.723Z</updated>
+    
+    <content type="html"><![CDATA[<p><strong>因为iphoneX等机型最下面会有条黑色等线，导致按钮等元素被遮住部分，所以设置安全区边距会往上提，如果不是刘海屏则保持原来样式。（注：在小程序模拟器上不生效，以真机为准。）</strong></p><p><em>iOS方案一：使用原生占位（仅App端支持）</em></p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">manifest.json 文件 app-plus 节点下配下 safearea</span><br><span class="line"><span class="string">&quot;safearea&quot;</span>: &#123;  </span><br><span class="line">    <span class="string">&quot;background&quot;</span>: <span class="string">&quot;#CCCCCC&quot;</span>,  </span><br><span class="line">    <span class="string">&quot;bottom&quot;</span>: &#123;  </span><br><span class="line">        <span class="string">&quot;offset&quot;</span>: <span class="string">&quot;auto&quot;</span>  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p><em>iOS方案二：不使用原生占位（非App端可以不配置manifest</em></p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;safearea&quot;</span>: &#123;  </span><br><span class="line">    <span class="string">&quot;bottom&quot;</span>: &#123;  </span><br><span class="line">        <span class="string">&quot;offset&quot;</span>: <span class="string">&quot;none&quot;</span>  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p><em>在你需要调大边距的盒子添加以下样式</em></p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">.box &#123;  </span><br><span class="line">  padding-bottom: <span class="number">0</span>;  </span><br><span class="line">  padding-bottom: constant(safe-area-inset-bottom);  </span><br><span class="line">  padding-bottom: env(safe-area-inset-bottom);  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;&lt;strong&gt;因为iphoneX等机型最下面会有条黑色等线，导致按钮等元素被遮住部分，所以设置安全区边距会往上提，如果不是刘海屏则保持原来样式。（注：在小程序模拟器上不生效，以真机为准。）&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;iOS方案一：使用原生占位（仅App端支持</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>【js】根据总数和指定区分基数划分的数组递增区间：如[1-50,51-100,101-101]</title>
+    <link href="https://yokii-ry.github.io/2021/03/02/exportgroup/"/>
+    <id>https://yokii-ry.github.io/2021/03/02/exportgroup/</id>
+    <published>2021-03-02T12:02:50.800Z</published>
+    <updated>2021-03-02T12:06:22.384Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="最近项目里用到一导出功能，但是后端并没有做文件流，只给我了json数据，所以是纯前端导出excel表格，其中有一个需求是根据总条数来做成以一个特定基数为准的递增数组区间，如下图所示："><a href="#最近项目里用到一导出功能，但是后端并没有做文件流，只给我了json数据，所以是纯前端导出excel表格，其中有一个需求是根据总条数来做成以一个特定基数为准的递增数组区间，如下图所示：" class="headerlink" title="最近项目里用到一导出功能，但是后端并没有做文件流，只给我了json数据，所以是纯前端导出excel表格，其中有一个需求是根据总条数来做成以一个特定基数为准的递增数组区间，如下图所示："></a>最近项目里用到一导出功能，但是后端并没有做文件流，只给我了json数据，所以是纯前端导出excel表格，其中有一个需求是根据总条数来做成以一个特定基数为准的递增数组区间，如下图所示：</h2><p><img src="/img/exportImg/demo.jpg" alt="avatar"><br>   感谢小组长大大哥帮我优化代码！！！牛逼！！特此记录一下！！<br>   代码实现：<br>   （注：total 为数据总条数，limit 为区分基数，上图是以total为7、limit为3的效果）</p> <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">     spiltItems () &#123;</span><br><span class="line">        <span class="keyword">const</span> limit = <span class="number">3</span>;</span><br><span class="line">        <span class="keyword">const</span> total = <span class="number">7</span>;</span><br><span class="line">        <span class="keyword">const</span> arr = []</span><br><span class="line">        <span class="keyword">const</span> items = <span class="built_in">Math</span>.ceil(total / limit)</span><br><span class="line">        <span class="keyword">const</span> remain = total % limit</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; items; i++) &#123;</span><br><span class="line">        arr.push(&#123;</span><br><span class="line">       index: i + <span class="number">1</span>,</span><br><span class="line">         label:<span class="number">1</span> + i * limit + <span class="string">&#x27;-&#x27;</span> +(i &lt; items - <span class="number">1</span> ? (i + <span class="number">1</span>) * limit : i * limit + remain) + <span class="string">&#x27;条&#x27;</span></span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">       <span class="keyword">return</span> arr</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;最近项目里用到一导出功能，但是后端并没有做文件流，只给我了json数据，所以是纯前端导出excel表格，其中有一个需求是根据总条数来做成以一个特定基数为准的递增数组区间，如下图所示：&quot;&gt;&lt;a href=&quot;#最近项目里用到一导出功能，但是后端并没有做文件流，只给我了</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>【js】Promise.all食用指南</title>
+    <link href="https://yokii-ry.github.io/2021/03/02/promise/"/>
+    <id>https://yokii-ry.github.io/2021/03/02/promise/</id>
+    <published>2021-03-02T12:01:11.452Z</published>
+    <updated>2021-03-02T12:01:56.570Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="我之前看Promise，里面有个方法叫all，因为接口是异步的，当你的业务必须拿到几个不同接口的所有数据后，再进行比较或者逻辑操作，这个时候就可以用到这个方法。此处贴上示例代码，是以Vue2为框架的背景下："><a href="#我之前看Promise，里面有个方法叫all，因为接口是异步的，当你的业务必须拿到几个不同接口的所有数据后，再进行比较或者逻辑操作，这个时候就可以用到这个方法。此处贴上示例代码，是以Vue2为框架的背景下：" class="headerlink" title="我之前看Promise，里面有个方法叫all，因为接口是异步的，当你的业务必须拿到几个不同接口的所有数据后，再进行比较或者逻辑操作，这个时候就可以用到这个方法。此处贴上示例代码，是以Vue2为框架的背景下："></a>我之前看Promise，里面有个方法叫all，因为接口是异步的，当你的业务必须拿到几个不同接口的所有数据后，再进行比较或者逻辑操作，这个时候就可以用到这个方法。此处贴上示例代码，是以Vue2为框架的背景下：</h2>  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">// 搭配async await 进一步优化</span></span><br><span class="line"> <span class="comment">// 接口1</span></span><br><span class="line"> <span class="keyword">async</span> <span class="function"><span class="title">getA</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="comment">// return一个Promise实例对象</span></span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">await</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve,reject</span>)=&gt;</span>&#123;</span><br><span class="line">       <span class="built_in">this</span>.API1().then(<span class="function"><span class="params">res</span>=&gt;</span>&#123;</span><br><span class="line">           resolve(res)</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;).catch(<span class="function"><span class="params">error</span> =&gt;</span> &#123;</span><br><span class="line">     <span class="built_in">console</span>.log(error)</span><br><span class="line">   &#125;)</span><br><span class="line">  &#125;</span><br><span class="line"> <span class="comment">// 接口2</span></span><br><span class="line"> <span class="keyword">async</span> <span class="function"><span class="title">getB</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="comment">// return一个Promise实例对象</span></span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">await</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve,reject</span>)=&gt;</span>&#123;</span><br><span class="line">       <span class="built_in">this</span>.API1().then(<span class="function"><span class="params">res</span>=&gt;</span>&#123;</span><br><span class="line">           resolve(res)</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;).catch(<span class="function"><span class="params">error</span> =&gt;</span> &#123;</span><br><span class="line">     <span class="built_in">console</span>.log(error)</span><br><span class="line">   &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"> <span class="string">`promise.all是等待所有异步资源加载完毕后再执行代码。`</span></span><br><span class="line"> <span class="comment">// 参数是一个数组，数组里面是一个个接口方法调用</span></span><br><span class="line"> <span class="comment">// 注意：如果有一个接口失败都不能成功返回</span></span><br><span class="line">getPromiseAll([<span class="built_in">this</span>.getA(),<span class="built_in">this</span>.getB()]).then(<span class="function"><span class="params">res</span>=&gt;</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(res)  <span class="comment">//  [&#123;data:&#123;...&#125;&#125;,&#123;data:&#123;...&#125;&#125;]  返回一个数组，数组的元素代表不同接口的响应数据</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;我之前看Promise，里面有个方法叫all，因为接口是异步的，当你的业务必须拿到几个不同接口的所有数据后，再进行比较或者逻辑操作，这个时候就可以用到这个方法。此处贴上示例代码，是以Vue2为框架的背景下：&quot;&gt;&lt;a href=&quot;#我之前看Promise，里面有个方</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>【js】for与for...in、for Each和map和for of</title>
+    <link href="https://yokii-ry.github.io/2021/03/02/for/"/>
+    <id>https://yokii-ry.github.io/2021/03/02/for/</id>
+    <published>2021-03-02T11:57:22.858Z</published>
+    <updated>2021-03-02T12:00:12.364Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="for与for…in的区别"><a href="#for与for…in的区别" class="headerlink" title="for与for…in的区别:"></a>for与for…in的区别:</h2><h3 id="1、相同点-for-能遍历有固定长度和固定次数的数组等。for-in-也能遍历数组-但也能遍历对象。"><a href="#1、相同点-for-能遍历有固定长度和固定次数的数组等。for-in-也能遍历数组-但也能遍历对象。" class="headerlink" title="1、相同点:for 能遍历有固定长度和固定次数的数组等。for...in 也能遍历数组,但也能遍历对象。"></a>1、相同点:<code>for</code> 能遍历有固定长度和固定次数的数组等。<code>for...in</code> 也能遍历数组,但也能遍历对象。</h3><h3 id="for-var-k-in-数组名-k-key-下标"><a href="#for-var-k-in-数组名-k-key-下标" class="headerlink" title="for(var k in 数组名) //k=key(下标)"></a>for(var k in 数组名) //k=key(下标)</h3><h3 id="2、不同点-for-是根据数据的长度来执行次数-empty-空-也会执行。而for-in则会根据数据内容来执行次数-empty会跳过不执行。"><a href="#2、不同点-for-是根据数据的长度来执行次数-empty-空-也会执行。而for-in则会根据数据内容来执行次数-empty会跳过不执行。" class="headerlink" title="2、不同点:for 是根据数据的长度来执行次数,empty(空)也会执行。而for..in则会根据数据内容来执行次数,empty会跳过不执行。"></a>2、不同点:<code>for</code> 是根据数据的长度来执行次数,<code>empty</code>(空)也会执行。而<code>for..in</code>则会根据数据内容来执行次数,<code>empty</code>会跳过不执行。</h3><h4 id="遍历数组或对象时优先使用for-in"><a href="#遍历数组或对象时优先使用for-in" class="headerlink" title="遍历数组或对象时优先使用for...in"></a>遍历数组或对象时优先使用<code>for...in</code></h4><h5 id="1-for-each只做遍历-无返回值-打印是undifined-仅仅只是做遍历功能"><a href="#1-for-each只做遍历-无返回值-打印是undifined-仅仅只是做遍历功能" class="headerlink" title="1.for each只做遍历,无返回值,打印是undifined,仅仅只是做遍历功能;"></a>1.for each只做遍历,无返回值,打印是undifined,仅仅只是做遍历功能;</h5><h5 id="2-map也可以用于数组遍历-可以返回一个数组-但是一定要return"><a href="#2-map也可以用于数组遍历-可以返回一个数组-但是一定要return" class="headerlink" title="2.map也可以用于数组遍历,可以返回一个数组,但是一定要return;"></a>2.map也可以用于数组遍历,可以返回一个数组,但是一定要return;</h5><pre><code class="js">//for of 遍历数组,不能遍历对象for let k of arr.keys() //获得键;for let v of arr.values()//获得值;for let[k,v] of arr.entries//同时获得键和值;//for of 遍历对象for (let k of object.keys(obj))//获得对象的键;for (let v of object.values(obj)) //获得对象的值;for (let v of object.entries(obj)) //获得对象的键和值;</code></pre>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;for与for…in的区别&quot;&gt;&lt;a href=&quot;#for与for…in的区别&quot; class=&quot;headerlink&quot; title=&quot;for与for…in的区别:&quot;&gt;&lt;/a&gt;for与for…in的区别:&lt;/h2&gt;&lt;h3 id=&quot;1、相同点-for-能遍历有固定长度和</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>【flutter】模型序列化BigDecima类型问题</title>
+    <link href="https://yokii-ry.github.io/2021/03/02/bigDecima/"/>
+    <id>https://yokii-ry.github.io/2021/03/02/bigDecima/</id>
+    <published>2021-03-02T11:48:51.446Z</published>
+    <updated>2021-03-02T11:56:21.777Z</updated>
+    
+    <content type="html"><![CDATA[<h4 id="之前在做公司flutter项目时候，与后端联调中，发现有一段代码逻辑并没有进入执行，但是终端也没报-错，然后打点debug发现是建立模型序列化的时候，flutter对BigDecima类型不支持识别，自动为int类型。"><a href="#之前在做公司flutter项目时候，与后端联调中，发现有一段代码逻辑并没有进入执行，但是终端也没报-错，然后打点debug发现是建立模型序列化的时候，flutter对BigDecima类型不支持识别，自动为int类型。" class="headerlink" title="之前在做公司flutter项目时候，与后端联调中，发现有一段代码逻辑并没有进入执行，但是终端也没报  错，然后打点debug发现是建立模型序列化的时候，flutter对BigDecima类型不支持识别，自动为int类型。"></a>之前在做公司flutter项目时候，与后端联调中，发现有一段代码逻辑并没有进入执行，但是终端也没报  错，然后打点debug发现是建立模型序列化的时候，flutter对BigDecima类型不支持识别，自动为int类型。</h4><h4 id="解决方法：把int类型换成num类型就完美解决，但是后端要跟前端标明此类型是BigDecima，一般涉及到计算的数字都会使用这个类型"><a href="#解决方法：把int类型换成num类型就完美解决，但是后端要跟前端标明此类型是BigDecima，一般涉及到计算的数字都会使用这个类型" class="headerlink" title="解决方法：把int类型换成num类型就完美解决，但是后端要跟前端标明此类型是BigDecima，一般涉及到计算的数字都会使用这个类型"></a>解决方法：把int类型换成num类型就完美解决，但是后端要跟前端标明此类型是BigDecima，一般涉及到计算的数字都会使用这个类型</h4>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h4 id=&quot;之前在做公司flutter项目时候，与后端联调中，发现有一段代码逻辑并没有进入执行，但是终端也没报-错，然后打点debug发现是建立模型序列化的时候，flutter对BigDecima类型不支持识别，自动为int类型。&quot;&gt;&lt;a href=&quot;#之前在做公司flutt</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>【js】一次性切割字符串两种以上符号的方法</title>
+    <link href="https://yokii-ry.github.io/2021/03/02/stringSplit/"/>
+    <id>https://yokii-ry.github.io/2021/03/02/stringSplit/</id>
+    <published>2021-03-02T11:46:30.487Z</published>
+    <updated>2021-03-02T11:55:36.139Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="这段时间在做项目的时候，跟后端对接发现我这里实现需要切割两次不同的符号，但是我觉得分两次切割太冗余了代码，所以我想着如果能一次性切割完就更好了，发现还真有这种办法，话不多说，上代码："><a href="#这段时间在做项目的时候，跟后端对接发现我这里实现需要切割两次不同的符号，但是我觉得分两次切割太冗余了代码，所以我想着如果能一次性切割完就更好了，发现还真有这种办法，话不多说，上代码：" class="headerlink" title="这段时间在做项目的时候，跟后端对接发现我这里实现需要切割两次不同的符号，但是我觉得分两次切割太冗余了代码，所以我想着如果能一次性切割完就更好了，发现还真有这种办法，话不多说，上代码："></a>这段时间在做项目的时候，跟后端对接发现我这里实现需要切割两次不同的符号，但是我觉得分两次切割太冗余了代码，所以我想着如果能一次性切割完就更好了，发现还真有这种办法，话不多说，上代码：</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> str = <span class="string">&#x27;IOS,https://xxxxxx.com&amp;ANDRIOD,https://xxxxxx.com&#x27;</span>;</span><br><span class="line"></span><br><span class="line">str.split(<span class="string">&#x27;/[,&amp;]/&#x27;</span>) <span class="comment">//以正则的方式，里面以一个数组的形式存放你想分割的标识符。</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(str) <span class="comment">//[&quot;IOS&quot;, &quot;https://xxxxxx.com&quot;, &quot;ANDRIOD&quot;, &quot;https://xxxxxx.com&quot;]</span></span><br></pre></td></tr></table></figure>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;这段时间在做项目的时候，跟后端对接发现我这里实现需要切割两次不同的符号，但是我觉得分两次切割太冗余了代码，所以我想着如果能一次性切割完就更好了，发现还真有这种办法，话不多说，上代码：&quot;&gt;&lt;a href=&quot;#这段时间在做项目的时候，跟后端对接发现我这里实现需要切割两</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>【css】轮播图切换抖动，使跑马灯文字模糊</title>
+    <link href="https://yokii-ry.github.io/2021/03/02/banner/"/>
+    <id>https://yokii-ry.github.io/2021/03/02/banner/</id>
+    <published>2021-03-02T11:38:38.065Z</published>
+    <updated>2021-03-02T11:56:01.497Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="该项目是移动端：vue搭配vantUI"><a href="#该项目是移动端：vue搭配vantUI" class="headerlink" title="该项目是移动端：vue搭配vantUI"></a>该项目是移动端：vue搭配vantUI</h1><h2 id="害，今天做移动端项目的时候发现跑马灯隔一下就会上下跳动模糊一秒，检查了下，发现去掉轮播图就没有这种bug了，然后就一直对着轮播图进行样式修改："><a href="#害，今天做移动端项目的时候发现跑马灯隔一下就会上下跳动模糊一秒，检查了下，发现去掉轮播图就没有这种bug了，然后就一直对着轮播图进行样式修改：" class="headerlink" title="害，今天做移动端项目的时候发现跑马灯隔一下就会上下跳动模糊一秒，检查了下，发现去掉轮播图就没有这种bug了，然后就一直对着轮播图进行样式修改："></a>害，今天做移动端项目的时候发现跑马灯隔一下就会上下跳动模糊一秒，检查了下，发现去掉轮播图就没有这种bug了，然后就一直对着轮播图进行样式修改：</h2><h3 id="1、给轮播图每一项固定高度"><a href="#1、给轮播图每一项固定高度" class="headerlink" title="1、给轮播图每一项固定高度."></a>1、给轮播图每一项固定高度.</h3><h3 id="2、给父级盒子overflow-hidden"><a href="#2、给父级盒子overflow-hidden" class="headerlink" title="2、给父级盒子overflow:hidden;"></a>2、给父级盒子overflow:hidden;</h3>   <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.swiperBox</span>&#123;</span><br><span class="line">    <span class="attribute">overflow</span>:hidden;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h3 id="3、给轮播图下面的元素一个padding-top值。都没用-终于给轮播图的父元素一个属性就搞定"><a href="#3、给轮播图下面的元素一个padding-top值。都没用-终于给轮播图的父元素一个属性就搞定" class="headerlink" title="3、给轮播图下面的元素一个padding-top值。都没用,终于给轮播图的父元素一个属性就搞定:"></a>3、给轮播图下面的元素一个padding-top值。都没用,终于给轮播图的父元素一个属性就搞定:</h3>   <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"> <span class="selector-class">.swiperBox</span>&#123;</span><br><span class="line">    <span class="attribute">transform</span>:<span class="built_in">translateZ</span>(<span class="number">0</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;该项目是移动端：vue搭配vantUI&quot;&gt;&lt;a href=&quot;#该项目是移动端：vue搭配vantUI&quot; class=&quot;headerlink&quot; title=&quot;该项目是移动端：vue搭配vantUI&quot;&gt;&lt;/a&gt;该项目是移动端：vue搭配vantUI&lt;/h1&gt;&lt;h2 i</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>【vue】路由传参 query 和 params</title>
+    <link href="https://yokii-ry.github.io/2021/03/02/vue-route/"/>
+    <id>https://yokii-ry.github.io/2021/03/02/vue-route/</id>
+    <published>2021-03-02T10:52:56.947Z</published>
+    <updated>2021-03-02T11:55:13.899Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="vue路由传参分为两种情况："><a href="#vue路由传参分为两种情况：" class="headerlink" title="vue路由传参分为两种情况："></a>vue路由传参分为两种情况：</h2><h3 id="一、query和params传参的区别："><a href="#一、query和params传参的区别：" class="headerlink" title="一、query和params传参的区别："></a>一、query和params传参的区别：</h3><p>1、query传参显示参数，params传参不显示参数。</p><p>2、取值方法也有不同：query取值：this.$route.query.XXX || this.$route.params.xxx</p><p>3、query传值页面刷新数据还在，而params传值页面数据消失。</p><h3 id="二、各自写法："><a href="#二、各自写法：" class="headerlink" title="二、各自写法："></a>二、各自写法：</h3><h3 id="query传参"><a href="#query传参" class="headerlink" title="query传参"></a>query传参</h3><p>组件写法(help.vue)：</p><h5 id="方式一："><a href="#方式一：" class="headerlink" title="方式一："></a>方式一：</h5><p><img src="/img/vueRouter/router1.png" alt="avatar"></p><h5 id="方式二："><a href="#方式二：" class="headerlink" title="方式二："></a>方式二：</h5><p><img src="/img/vueRouter/router2.png" alt="avatar"></p><h5 id="接受写法（home-vue）"><a href="#接受写法（home-vue）" class="headerlink" title="接受写法（home.vue）:"></a>接受写法（home.vue）:</h5><p><img src="/img/vueRouter/router3.png" alt="avatar"></p><h5 id="页面渲染（home-vue）"><a href="#页面渲染（home-vue）" class="headerlink" title="页面渲染（home.vue）:"></a>页面渲染（home.vue）:</h5><p><img src="/img/vueRouter/router4.png" alt="avatar"></p><h5 id="query参数赋值到data："><a href="#query参数赋值到data：" class="headerlink" title="query参数赋值到data："></a>query参数赋值到data：</h5><p><img src="/img/vueRouter/router5.png" alt="avatar"></p><h4 id="params："><a href="#params：" class="headerlink" title="params："></a>params：</h4><h6 id="组件写法（about-vue）"><a href="#组件写法（about-vue）" class="headerlink" title="组件写法（about.vue）:"></a>组件写法（about.vue）:</h6><p><img src="/img/vueRouter/router6.png" alt="avatar"></p><h5 id="方式二"><a href="#方式二" class="headerlink" title="方式二:"></a>方式二:</h5><p><img src="/img/vueRouter/router7.png" alt="avatar"></p><h5 id="路由写法："><a href="#路由写法：" class="headerlink" title="路由写法："></a>路由写法：</h5><p><img src="/img/vueRouter/router8.png" alt="avatar"></p><h5 id="接受写法："><a href="#接受写法：" class="headerlink" title="接受写法："></a>接受写法：</h5><p><img src="/img/vueRouter/router9.png" alt="avatar"></p><h5 id="页面渲染："><a href="#页面渲染：" class="headerlink" title="页面渲染："></a>页面渲染：</h5><p><img src="/img/vueRouter/router10.png" alt="avatar"></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;vue路由传参分为两种情况：&quot;&gt;&lt;a href=&quot;#vue路由传参分为两种情况：&quot; class=&quot;headerlink&quot; title=&quot;vue路由传参分为两种情况：&quot;&gt;&lt;/a&gt;vue路由传参分为两种情况：&lt;/h2&gt;&lt;h3 id=&quot;一、query和params传参的</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>【npm】前端如何配置不同镜像源：yarn cnpm</title>
+    <link href="https://yokii-ry.github.io/2021/03/02/mirroring/"/>
+    <id>https://yokii-ry.github.io/2021/03/02/mirroring/</id>
+    <published>2021-03-02T08:50:26.760Z</published>
+    <updated>2021-03-02T11:49:49.465Z</updated>
+    
+    <content type="html"><![CDATA[<p>  在装的过程中，使用npm有时候因为网络问题容易丢包，因此可配置一些镜像源进行优化，vue3好像也不能直接使用npm，只能使用yarn，整理了一些镜像源，推荐给大家，有错误希望能指出来，感恩。</p><h2 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h2><h3 id="1-直接修改镜像源"><a href="#1-直接修改镜像源" class="headerlink" title="1.直接修改镜像源"></a>1.直接修改镜像源</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">　　$ npm config <span class="built_in">set</span> registry https://registry.npm.taobao.org</span><br><span class="line"></span><br><span class="line">　　$ npm config get registry</span><br></pre></td></tr></table></figure><h3 id="2-安装cnpm-不推荐使用"><a href="#2-安装cnpm-不推荐使用" class="headerlink" title="2.安装cnpm (不推荐使用)"></a>2.安装cnpm (不推荐使用)</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install -g cnpm --registry=https://registry.npm.taobao.org</span><br></pre></td></tr></table></figure><h3 id="3-nrm-可选-如果已经做了第1步-就不需要设置了"><a href="#3-nrm-可选-如果已经做了第1步-就不需要设置了" class="headerlink" title="3.nrm (可选 如果已经做了第1步 就不需要设置了)"></a>3.nrm (可选 如果已经做了第1步 就不需要设置了)</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ npm i nrm -g</span><br><span class="line"></span><br><span class="line">  $ nrm -V 验证版本</span><br><span class="line"></span><br><span class="line">  $ nrm ls | list 查看可切换镜像源</span><br><span class="line"></span><br><span class="line">  $ nrm use cnpm | npm | taobao taobao 是最快的 建议使用</span><br></pre></td></tr></table></figure><h3 id="4-yarn"><a href="#4-yarn" class="headerlink" title="4.yarn"></a>4.yarn</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">$  npm i yarn -g</span><br><span class="line"></span><br><span class="line">       $ yarn -v</span><br><span class="line"></span><br><span class="line">       $ yarn config <span class="built_in">set</span> registry https://registry.npm.taobao.org</span><br><span class="line"></span><br><span class="line">       $ yarn config get registry</span><br><span class="line"></span><br><span class="line">       $ npm 常用命令</span><br><span class="line"></span><br><span class="line">       $ npm install 包名 -g | --save-dev(-D) --save(-S)</span><br><span class="line"></span><br><span class="line">       $ npm uninstall 包名 -g | --save-dev(-D) --save(-S)</span><br><span class="line"></span><br><span class="line">       $ yarn 常用命令</span><br><span class="line"></span><br><span class="line">       $ yarn add 包名 -g | --save-dev(-D) --save(-S)</span><br><span class="line"></span><br><span class="line">       $ yarn remove 包名 -g | --save-dev(-D) --save(-S)</span><br></pre></td></tr></table></figure>]]></content>
     
     
       
