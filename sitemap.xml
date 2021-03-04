@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://yokii-ry.github.io/2021/03/04/rem/</loc>
+    
+    <lastmod>2021-03-04</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://yokii-ry.github.io/2021/03/02/zsh/</loc>
     
     <lastmod>2021-03-04</lastmod>
@@ -24,13 +31,6 @@
   
   <url>
     <loc>https://yokii-ry.github.io/2021/03/02/stringSplit/</loc>
-    
-    <lastmod>2021-03-04</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://yokii-ry.github.io/2021/03/04/rem/</loc>
     
     <lastmod>2021-03-04</lastmod>
     
